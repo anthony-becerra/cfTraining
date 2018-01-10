@@ -6,13 +6,14 @@
 </head>
 
 <body>
-<form id="frm_firstForm" name="frm_firstForm" method="post" action="">
+<!-- Changed form action to connect to formAction.cfm -->
+<form id="frm_firstForm" name="frm_firstForm" method="post" action="formAction.cfm">
   <p>
     <label for="fld_firstName">Your First Name</label>
     <input type="text" name="fld_firstName" id="fld_firstName" />
   </p>
   <p>
-    <label for="fld_lastName">Your last name</label>
+    <label for="fld_lastName">Your Last name</label>
     <input type="text" name="fld_lastName" id="fld_lastName" />
   </p>
   <p>

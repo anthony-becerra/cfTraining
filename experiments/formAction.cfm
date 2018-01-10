@@ -6,7 +6,10 @@
 </head>
 
 <body>
-	<p>Welcome -firstName- - last name</p>
-	<p>You are -age- years old</p>
+	<!-- Adding cfoutput tag to print to screen and passing in form data -->
+	<cfoutput >
+		<p>Welcome #form.fld_firstName# #form.fld_lastName#</p>
+		<p>You are #form.fld_age# years old</p>
+	</cfoutput>
 </body>
 </html>
