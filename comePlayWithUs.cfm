@@ -1,4 +1,10 @@
 <!---Get page content for fld_pageID = 4--->
+<cfquery datasource="hdStreet" name="rsPage">
+	SELECT FLD_PAGETITLE, FLD_PAGECONTENT
+	FROM TBL_PAGES
+	WHERE FLD_PAGEID = 4 AND FLD_PAGEISACTIVE = 1
+</cfquery>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,31 +41,11 @@
   </div>
   <div id="pageBody">
   	<div id="calendarContent">
-    <!---Erase from here--->
-    <h1>Come play with us</h1>
-<p><img src="images/homeImage.jpg" alt="the band playin" width="300" height="201" class="floatLeft" />You are a musician and want to come play with us? Read on... all the information you need is on this page.</p>
-<h2>What level?</h2>
-<p>A band certainly is one of the bast place to learn how to play music. As such, we welcome anyone interested in playing music with us. Of course it is required to be able to read musical notation and have some practice with your instruments.</p>
-<p>If you feel ready, if you're up to it, we'll be more than happy to welcome you in the band. There certainly is a spot on the stage for everyone.</p>
-    <h2>What instruments?</h2>
-    <p>A band like ours include brass instruments, woodwind instrumants and some percussion. We need no strings except for a bass guitar and a harp for some pieces. Here is a list of instruments we are currently looking for. If you are not sure about the instrument you play, please contact us.</p>
-    <h3>Brass</h3>
-    <ul>
-      <li>Trumpet - Trombone - Horn - Tuba</li>
-    </ul>
-    <h3>Woodwind</h3>
-    <ul>
-      <li>Saxophone - Clarinet - Oboe - English Horn - Flute</li>
-    </ul>
-    <h3>Percussion</h3>
-    <ul>
-      <li>Drums - Timpani - Xylophone - Vibraphone</li>
-    </ul>
-    <h2>About the rehersals</h2>
-    <p>We rehearse once a week on Wednesay nights from 8:00pm till 10:00pm at the Baton Rouge High school. Sometimes, we add extra-rehearsals and dress-rehearsals as required by the concert schedule.</p>
-    <h2>Contact us</h2>
-    <p>If you want to play with us, please feel free to contact us by e-mail <a href="mailto:info@hdstreetband.com">info@hdstreetband.com</a></p>
-    <p>&nbsp;</p>
+    <!---Insert database content from here--->
+	<cfoutput>
+		<h1>#rsPage.FLD_PAGETITLE#</h1>
+		#rsPage.FLD_PAGECONTENT#
+	</cfoutput>
     <!---To here--->
 	</div>
 	<div id="calendarSideBar">

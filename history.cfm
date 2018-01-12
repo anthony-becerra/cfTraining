@@ -1,9 +1,15 @@
-<!---Get page content for fld_pageID = 5--->
+<!---Get page content for fld_pageID = 2--->
+<cfquery datasource="hdStreet" name="rsPage">
+	SELECT FLD_PAGETITLE, FLD_PAGECONTENT
+	FROM TBL_PAGES
+	WHERE FLD_PAGEID = 2 AND FLD_PAGEISACTIVE = 1
+</cfquery>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8" />
-<title>HD Street Concert Band - Site Map</title>
+<title>HD Street Concert Band - History</title>
 <link href="/cfTraining/styles/hdStreet.css" rel="stylesheet" type="text/css" media="screen" />
 <script type="text/javascript" src="/cfTraining/script/jquery.js"></script>
 <script type="text/javascript" src="/cfTraining/script/menu.js"></script>
@@ -34,24 +40,12 @@
     </ul>
   </div>
   <div id="pageBody">
-  <!---Erase from here--->
-<h1>Site Map</h1>
-    <ul>
-      <li><a href="index.html">Home page</a></li>
-      <li><a href="agenda.html">Agenda</a></li>
-      <li>The Band
-        <ul>
-          <li><a href="director.html">The Director</a></li>
-          <li><a href="musicians.html">Pictures</a></li>
-          <li><a href="history.html">The band history</a></li>
-        </ul>
-      </li>
-      <li><a href="wePlayForYou.html">We play for you</a></li>
-      <li><a href="comePlayWithUs.html">Come play with us</a></li>
-      <li><a href="news.html">News</a></li>
-      <li><a href="contactUs.html">Contact us</a></li>
-    </ul>
-    <!---To here--->
+  <!---Insert database content from here--->
+  <cfoutput>
+  	<h1>#rsPage.FLD_PAGETITLE#</h1>
+  	#rsPage.FLD_PAGECONTENT#
+  </cfoutput>
+  <!---To here--->
 </div>
   <div id="footer">
     <p>&copy; Copyright 2011 - HD Street Concert Band</p>

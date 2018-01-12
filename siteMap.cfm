@@ -1,19 +1,15 @@
-<!---
-Get page content
-cfquery requires datasource(name of database) and name (local variable that will contain data retrieved from DB)
-rsPage > 'rs' stands for 'record set'
---->
+<!---Get page content for fld_pageID = 5--->
 <cfquery datasource="hdStreet" name="rsPage">
 	SELECT FLD_PAGETITLE, FLD_PAGECONTENT
 	FROM TBL_PAGES
-	WHERE FLD_PAGEID = 1 AND FLD_PAGEISACTIVE = 1
+	WHERE FLD_PAGEID = 5 AND FLD_PAGEISACTIVE = 1
 </cfquery>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8" />
-<title>HD Street Concert Band - Tony Sapere - Director</title>
+<title>HD Street Concert Band - Site Map</title>
 <link href="/cfTraining/styles/hdStreet.css" rel="stylesheet" type="text/css" media="screen" />
 <script type="text/javascript" src="/cfTraining/script/jquery.js"></script>
 <script type="text/javascript" src="/cfTraining/script/menu.js"></script>
@@ -44,11 +40,13 @@ rsPage > 'rs' stands for 'record set'
     </ul>
   </div>
   <div id="pageBody">
-  	<cfoutput>
-  		<h1>#rsPage.FLD_PAGETITLE#</h1>
-  		#rsPage.FLD_PAGECONTENT#
-  	</cfoutput>
-  </div>
+  <!---Insert database content from here--->
+  <cfoutput>
+  	<h1>#rsPage.FLD_PAGETITLE#</h1>
+  	#rsPage.FLD_PAGECONTENT#
+  </cfoutput>
+  <!---To here--->
+</div>
   <div id="footer">
     <p>&copy; Copyright 2011 - HD Street Concert Band</p>
   </div>
