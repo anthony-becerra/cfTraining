@@ -38,28 +38,45 @@
     	<cfquery datasource="hdStreet" name="rsCurrentEvents">
     		SELECT FLD_EVENTID,FLD_EVENTNAME,FLD_EVENTDATETIME,FLD_EVENTLOCATION,FLD_EVENTVENUE
     		FROM TBL_EVENTS
-    		WHERE FLD_EVENTDATETIME >= #now()#
+    		<!---WHERE FLD_EVENTDATETIME >= #now()#--->
     		ORDER BY FLD_EVENTDATETIME ASC 
     	</cfquery>
-    	<cfdump var="#rsCurrentEvents#" >
 <h1> Agenda</h1>
       <!---Chapter 4 - Remove static version of table and replace with dynamic version--->
-
+	<cfif rsCurrentEvents.RecordCount EQ 0>
+		<p>Sorry, there are no events at this time.</p>
+	<cfelse>
+		<table >
+			<cfoutput query="rsCurrentEvents">
+				<tr>
+					<th>#dateFormat(FLD_EVENTDATETIME, 'mm/dd/yyyy')#</th>
+					<td>#FLD_EVENTNAME# - #FLD_EVENTLOCATION# (#FLD_EVENTVENUE#)</td>
+					<td><a href="agenda.cfm">Read More</a></td>
+				</tr>
+			</cfoutput>
+		</table>
+	</cfif>
       <!---Chapter 4 - To HERE--->
 </div>
     <div id="calendarSideBar">
-<h1>Next Event</h1>
-      <div id="EventDetails">
-        <p id="eventDate"><span id="month">Jul</span> <span id="days">19</span></p>
-        <h2>Summer sounds Festival</h2>
-      </div>
-      <p> Phasellus ac justo sapien, vitae mattis  justo. Cras malesuada posuere ante, non eleifend magna auctor sit amet.  Cras placerat mi eu lectus viverra rutrum. </p>
-      <p class="alignRight"><a href="events/20110719.html">Read More</a></p>
+    	<cfif rsCurrentEvents.RecordCount EQ 0>
+    		<p>Sorry, there are no events at this time.</p>
+    	<cfelse>
+    		<cfoutput >
+				<h1>Next Event</h1>
+		      	<div id="EventDetails">
+		        	<p id="eventDate"><span id="month">#dateFormat(rsCurrentEvents.FLD_EVENTDATETIME, 'mmm')#</span> <span id="days">#dateFormat(rsCurrentEvents.FLD_EVENTDATETIME, 'dd')#</span></p>
+		        	<h2>#rsCurrentEvents.FLD_EVENTNAME# - #rscurrentEvents.FLD_EVENTLOCATION#</h2>
+		      	</div>
+				<p>#rsCurrentEvents.FLD_EVENTVENUE#</p>
+		      	<p class="alignRight"><a href="events/20110719.html">Read More</a></p>		
+    		</cfoutput>
+    	</cfif>
+	</div>
 </div>
-  </div>
-  <div id="footer">
-    <p>&copy; Copyright 2011 - HD Street Concert Band</p>
-  </div>
+<div id="footer">
+	<p>&copy; Copyright 2011 - HD Street Concert Band</p>
+</div>
 </div>
 </body>
 </html>
