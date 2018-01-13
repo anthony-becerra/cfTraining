@@ -1,9 +1,8 @@
-<!---Get news years--->
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8" />
-<title>HD Street Concert Band - News</title>
+<title>HD Street Concert Band - Agenda</title>
 <link href="/cfTraining/styles/hdStreet.css" rel="stylesheet" type="text/css" media="screen" />
 <script type="text/javascript" src="/cfTraining/script/jquery.js"></script>
 <script type="text/javascript" src="/cfTraining/script/menu.js"></script>
@@ -35,46 +34,27 @@
   </div>
   <div id="pageBody">
     <div id="calendarContent">
-<!---Chapter 4 - Erase from here--->
-      <h1> News</h1>
-      <p>&nbsp;</p>
-      <table>
-        <caption>
-          Latest news
-        </caption>
-        <tr>
-          <th>May 12th</th>
-          <td>HD Street to play out of state</td>
-          <td><a href="news/20110512.html">Read More</a></td>
-        </tr>
-        <tr>
-          <th>May 6th</th>
-          <td>New concerts announced</td>
-          <td><a href="news/20110506.html">Read More</a></td>
-        </tr>
-        <tr>
-          <th>Apr 30th</th>
-          <td>Happy birthday Tony</td>
-          <td><a href="news/20110430.html">Read More</a></td>
-        </tr>
-        <tr>
-          <th>Jan 14th</th>
-          <td>Happy new year</td>
-          <td><a href="news/20110114.html">Read More</a></td>
-        </tr>
-      </table>
-      <p>&nbsp;</p>
-      <!---Chapter 4 - To here--->
+    	<!---CF now() function returns current datetime--->
+    	<cfquery datasource="hdStreet" name="rsCurrentEvents">
+    		SELECT FLD_EVENTID,FLD_EVENTNAME,FLD_EVENTDATETIME,FLD_EVENTLOCATION,FLD_EVENTVENUE
+    		FROM TBL_EVENTS
+    		WHERE FLD_EVENTDATETIME >= #now()#
+    		ORDER BY FLD_EVENTDATETIME ASC 
+    	</cfquery>
+    	<cfdump var="#rsCurrentEvents#" >
+<h1> Agenda</h1>
+      <!---Chapter 4 - Remove static version of table and replace with dynamic version--->
+
+      <!---Chapter 4 - To HERE--->
 </div>
     <div id="calendarSideBar">
-<h1>News archive</h1>
-      <ul>
-        <li><a href="#">2010</a></li>
-        <li><a href="#">2009</a></li>
-        <li><a href="#">2008</a></li>
-        <li><a href="#">2007</a></li>
-      </ul>
-      <p class="alignRight">&nbsp;</p>
+<h1>Next Event</h1>
+      <div id="EventDetails">
+        <p id="eventDate"><span id="month">Jul</span> <span id="days">19</span></p>
+        <h2>Summer sounds Festival</h2>
+      </div>
+      <p> Phasellus ac justo sapien, vitae mattis  justo. Cras malesuada posuere ante, non eleifend magna auctor sit amet.  Cras placerat mi eu lectus viverra rutrum. </p>
+      <p class="alignRight"><a href="events/20110719.html">Read More</a></p>
 </div>
   </div>
   <div id="footer">
