@@ -6,7 +6,8 @@
 </head>
 
 <body>
-<form id="frmUser" name="frmUser" method="get" action="actionPage.cfm">
+<!---Changed method to post--->
+<form id="frmUser" name="frmUser" method="post" action="actionPage.cfm">
 <fieldset>
 <legend>Registration form</legend>
   <p>
@@ -18,7 +19,7 @@
     <input type="text" name="fld_lastName" id="fld_lastName" />
   </p>
   <p>
-    <label><input type="radio" name="fld_gender" value="M" id="fld_gender_0" />Male</label>
+    <label><input type="radio" name="fld_gender" value="M" id="fld_gender_0" checked="checked" />Male</label>
     <label><input type="radio" name="fld_gender" value="F" id="fld_gender_1" />Female</label>
   </p>
   <p>
