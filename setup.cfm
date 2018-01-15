@@ -1,5 +1,5 @@
 
-	<!---Adjust event dates--->
+	<!---Adjust event dates +1 year from now--->
 	<cfquery name=rs_events datasource="hdStreet" >
 		SELECT TBL_EVENTS.FLD_EVENTDATETIME, TBL_EVENTS.FLD_EVENTID
 		FROM TBL_EVENTS
