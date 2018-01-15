@@ -41,7 +41,7 @@
   </div>
   <div id="pageBody">
     <div id="calendarContent">
-    	<!---Check if newsID parameter exists in URL --->
+    	<!---If newsID parameter exists in URL --->
     	<cfif isDefined("url.newsID")>
     		<!---Query and output that single news--->
     		<cfquery datasource="hdStreet" name="rsSingleNews">
@@ -55,18 +55,37 @@
     			<p class="metadata">Published on #dateFormat(rsSingleNews.FLD_NEWSCREATIONDATE, "mm/dd/yyyy")# by #rsSingleNews.FLD_USERFIRSTNAME# #rsSingleNews.FLD_USERLASTNAME#</p>
     			#rsSingleNews.FLD_NEWSCONTENT#
     		</cfoutput>
+		<!---Elseif year parameter exists in URL--->
+		<cfelseif isDefined('url.year')>
+			<!---Query and output the news for that year--->
+			<cfquery datasource="hdStreet" name="rsNewsOfYear">
+				SELECT TBL_NEWS.FLD_NEWSTITLE, TBL_NEWS.FLD_NEWSCREATIONDATE, TBL_NEWS.FLD_NEWSID
+				FROM TBL_NEWS
+				WHERE year(FLD_NEWSCREATIONDATE) = #url.year#
+				ORDER BY FLD_NEWSCREATIONDATE DESC				
+			</cfquery>
+			<h1>All the news of the year <cfoutput>#url.year#</cfoutput></h1>
+		      <table>
+				<!---Output  news in a table--->
+				<!---Adding query attribute allows it to loop through--->
+				<cfoutput query="rsNewsOfYear">
+					<tr>
+						<td>#dateFormat(FLD_NEWSCREATIONDATE, 'mm/dd/yyyy')#</td>
+						<td>#FLD_NEWSTITLE#</td>
+						<td><a href="news.cfm?newsID=#FLD_NEWSID#">Read More</a></td>
+					</tr>
+				</cfoutput>
+		      </table>
+		<!---Else newsID parameter not present in URL --->
 		<cfelse>
-			<!---Output all news if url scope newsID not present in URL--->
-			
-			<!---Get all news --->
+			<!---Query and output all news --->
 			<cfquery datasource="hdStreet" name="rsAllNews">
 				SELECT FLD_NEWSTITLE, FLD_NEWSCREATIONDATE, FLD_NEWSID
 				FROM TBL_NEWS
 				ORDER BY FLD_NEWSCREATIONDATE DESC 
 			</cfquery>
-			  <h1> News</h1>
+			  <h1>News</h1>
 		      <table>
-				<!---Output  news in a table--->
 				<!---Adding query attribute allows it to loop through--->
 				<cfoutput query="rsAllNews">
 					<tr>
