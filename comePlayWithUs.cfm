@@ -1,51 +1,30 @@
+<!---Create an instance of the userService component --->
+<cfset userService = createobject("component",'cftraining.components.userService' ) />
 <!---Form processing script starts here--->
 <cfif structKeyExists(form,'fld_newUserSubmit')>
+	<!---Generate the missing data for a new user --->
+	<cfset form.fld_userPassword = generateSecretKey("AES")>
+	<cfset form.fld_userRole = 1 >
+	<cfset form.fld_userApproved = 0>
+	<cfset form.fld_userIsActive = 0>
 	<!---Server side data validation --->
-	<cfset aErrorMessages = Arraynew(1)>
-	<!---Validate first name --->
-	<cfif fld_userFirstName EQ ''>
-		<cfset arrayAppend(aErrorMessages,'Please provide a valid first name')>
-	</cfif>
-	<!---Validate last name --->
-	<cfif fld_userLastName EQ ''>
-		<cfset arrayAppend(aErrorMessages,'Please provide a valid last name')>
-	</cfif>
-	<!---Validate eMail address --->
-	<cfif fld_userEmail EQ '' OR NOT isvalid("eMail",form.fld_userEmail)>
-		<cfset arrayAppend(aErrorMessages,'Please provide a valid email address')>
-	</cfif>
+	<cfset aErrorMessages = userService.validateUser(form.fld_userFirstName,form.fld_userLastName,form.fld_userEmail,form.fld_userPassword,form.fld_userPassword)/>
 	<!---Check if aErrorMessage array is empty --->
 	<cfif arrayIsEmpty(aErrorMessages)>
-		<!---Generate the missing data for a new user --->
-		<cfset form.fld_userPassword = generateSecretKey("AES")>
-		<cfset form.fld_userRole = 1 >
-		<cfset form.fld_userApproved = 0>
-		<cfset form.fld_userIsActive = 0>
+
 		<!---Insert data in database if no error detected --->
-		<cfquery datasource="hdStreet" >
-			INSERT INTO TBL_USERS
-			(FLD_USERFIRSTNAME,FLD_USERLASTNAME,FLD_USEREMAIL,FLD_USERPASSWORD,FLD_USERCOMMENT,FLD_USERAPPROVED,FLD_USERISACTIVE,FLD_USERROLE,FLD_USERINSTRUMENT)
-			VALUES
-			('#form.fld_userFirstName#', '#form.fld_userLastName#', '#form.fld_userEmail#', '#form.fld_userPassword#', '#form.fld_userComment#', #form.fld_userApproved#, #form.fld_userIsActive#, #form.fld_userRole#, #form.fld_userInstrument#)
-		</cfquery>
+		<cfset userService.addUser(form.fld_userFirstName,form.fld_userLastName,form.fld_userEmail,form.fld_userPassword,form.fld_userRole,form.fld_userInstrument,form.fld_userComment,form.fld_userApproved,form.fld_userIsActive) />
 		<cfset userIsInserted=true>
 	</cfif>
 </cfif>
 <!---Get page content for fld_pageID = 4--->
-<cfquery datasource="hdStreet" name="rsPage">
-	SELECT FLD_PAGETITLE, FLD_PAGECONTENT
-	FROM TBL_PAGES
-	WHERE FLD_PAGEID = 4 AND FLD_PAGEISACTIVE = 1
-</cfquery>
+<cfset pageService = createObject("component",'cfTraining.components.pageService' ) />
+<cfset rsPage = pageService.getPageByID(4)>
 <!---Get instruments list in alpha order to fill drop down menu of the form --->
-<cfquery datasource="hdStreet" name="rsInstrumentsList">
-	SELECT FLD_INSTRUMENTID, FLD_INSTRUMENTNAME
-	FROM TBL_INSTRUMENTS
-	ORDER BY FLD_INSTRUMENTNAME ASC 
-</cfquery>
+<cfset rsInstrumentsList = userService.getInstruments()>
 
 <!---Include header --->
-<cfinclude template="includes/header.cfm" >
+<cfmodule template="customTags/front.cfm" title="HD Street Band - Come Play With Us">
   <div id="pageBody">
   	<div id="calendarContent">
     <!---Insert database content from here--->
@@ -100,4 +79,4 @@
 	</div>
 	</div>
  </div>
-<cfinclude template="includes/footer.cfm" >
+</cfmodule>

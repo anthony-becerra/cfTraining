@@ -1,5 +1,5 @@
 <!---Include header --->
-<cfinclude template="includes/header.cfm" >
+<cfmodule template="customTags/front.cfm" >
   <div id="pageBody">
     <div id="homeContent">
   <h1> HD Street band to play out of state</h1>
@@ -32,4 +32,4 @@
       </div>
     </div>
   </div>
-<cfinclude template="includes/footer.cfm" >
+</cfmodule>

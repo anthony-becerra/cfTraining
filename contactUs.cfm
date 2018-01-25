@@ -1,12 +1,8 @@
 <!---Get page content for fld_pageID = 6--->
-<cfquery datasource="hdStreet" name="rsPage">
-	SELECT FLD_PAGETITLE, FLD_PAGECONTENT
-	FROM TBL_PAGES
-	WHERE FLD_PAGEID = 6 AND FLD_PAGEISACTIVE = 1
-</cfquery>
-
+<cfset pageService = createObject("component",'cfTraining.components.pageService' ) />
+<cfset rsPage = pageService.getPageByID(6)>
 <!---Include header --->
-<cfinclude template="includes/header.cfm" >
+<cfmodule template="customTags/front.cfm" title="HD Street Band - Contact Us">
   <div id="pageBody">
   <!---Insert database content from here--->
   <cfoutput>
@@ -15,4 +11,4 @@
   </cfoutput>
   <!---To here--->
 </div>
-<cfinclude template="includes/footer.cfm" >
+</cfmodule>
